@@ -1,11 +1,11 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
+const { resolve } = require('path');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: resolve('./src/index.js'),
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve('./build'),
+    path: resolve('./build'),
     clean: true,
   },
 
@@ -17,7 +17,7 @@ module.exports = {
         use: 'babel-loader',
       },
       {
-        test: /\.css$/i,
+        test: /\.css$/,
         use: ["style-loader", "css-loader"],
       },
       {
@@ -35,8 +35,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Movie App',
       hash: true,
-      template: './src/assets/index.html',
-      favicon: './src/assets/favicon.ico'
+      template: resolve('./src/assets/index.html'),
+      favicon: resolve('./src/assets/favicon.ico'),
     }),
   ],
 };
