@@ -6,7 +6,7 @@
   "scripts": {
     "build:dev": "webpack --node-env development --config ./webpack",
     "build:prd": "webpack --node-env production --config ./webpack",
-    "start:dev": "webpack serve --node-env development --config ./webpack/webpack.config.dev.js",
+    "start:dev": "webpack serve --node-env development --config ./webpack",
     "test": "jest ./src",
     "test:coverage": "jest ./src --collectCoverage"
   },
