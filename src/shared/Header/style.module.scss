@@ -1,0 +1,12 @@
+@use '../../global' as g;
+
+header {
+  width: 100%;
+}
+
+#logo {
+  position: absolute;
+  top: 5vh;
+  left: 4vw;
+  @include g.logo
+}
