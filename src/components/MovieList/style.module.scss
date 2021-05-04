@@ -1,0 +1,27 @@
+.mainBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0.8vh;
+  background-color: #232323;
+}
+
+.listBlock {
+  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.counter {
+  width: 90%;
+  color: #b1b1b1;
+  text-decoration: none;
+  font-size: 1.4vw;
+}
+
+.count {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.4vw; 
+}

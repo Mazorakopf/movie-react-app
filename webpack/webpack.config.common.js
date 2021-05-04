@@ -18,8 +18,8 @@ module.exports = {
         use: 'babel-loader',
       },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        test: /\.module\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(jpg|png)$/,
