@@ -1,0 +1,115 @@
+@use '../../global' as g;
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -46vh; 
+  margin-left: -20vw;
+  display: flex;
+  flex-direction: column;
+  width: 40vw;
+  background-color: #232323;
+  align-self: center;
+
+  span {
+    font-size: 2vw;
+    text-transform: uppercase;
+    margin: 1vh 2vw;
+  }
+
+  label {
+    margin: 1vh 2vw;
+    color: white;
+    font-size: 0.9vw;
+  }
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  margin: 1vh 2vw;
+  color: g.$crimson;
+  font-size: 0.9vw;
+
+  input,
+  select {
+    margin-top: 0.7vh;
+    height: 6vh;
+    background-color: g.$transparent-gray;
+
+    &::placeholder {
+      padding-left: 2%;
+    }
+  }
+
+  input[type='date']::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 2px;
+    opacity: 0.6;
+    filter: invert(0.8);
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+
+  button {
+    width: 10vw;
+    height: 6vh;
+    font-size: 1vw;
+    text-transform: uppercase;
+  }
+
+  .resetBtn {
+    margin-right: 1vw;
+    border: 1.7px solid g.$crimson;
+    background-color: transparent;
+    color: g.$crimson;
+  }
+
+  .submitBtn {
+    margin-right: 2vw;
+    background-color: g.$crimson;
+    color: white;
+  }
+}
+
+.close {
+  width: 28px;
+  height: 28px;
+  opacity: 0.3;
+  background-color: transparent;
+  align-self: flex-end;
+  margin-right: 2em;
+}
+
+.close:hover {
+  opacity: 1;
+}
+
+.close:before,
+.close:after {
+  position: absolute;
+  content: '';
+  height: 28px;
+  width: 2px;
+  background-color: #fff;
+}
+
+.close:before {
+  transform: rotate(45deg);
+}
+
+.close:after {
+  transform: rotate(-45deg);
+}

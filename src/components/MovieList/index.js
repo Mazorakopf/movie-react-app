@@ -11,11 +11,17 @@ const MovieList = (props) => {
     <div className={styles.mainBlock}>
       <MovieNavbar />
       <span className={styles.counter}>
-        <span className={styles.count}>{moviePreviews.length}</span> movies found
+        <span className={styles.count}>{moviePreviews.length}</span> movies
+        found
       </span>
       <div className={styles.listBlock}>
         {moviePreviews.map((preview, i) => (
-          <MovieListItem {...preview} key={`${preview.title}_${i}`} />
+          <MovieListItem
+            {...preview}
+            openEditWindow={() => props.openEditWindow(preview)}
+            openDeleteWindow={() => props.openDeleteWindow(preview)}
+            key={`${preview.title}_${i}`}
+          />
         ))}
       </div>
     </div>
