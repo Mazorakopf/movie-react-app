@@ -38,3 +38,52 @@
   border: 1px solid g.$dirty-white-2;
   padding: 3px 12px;
 }
+
+.settingBlock {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  margin: 16px 0 0 285px;
+
+  &:hover {
+    .settingContent {
+      display: block;
+    }
+  }
+}
+
+.settingContent {
+  display: none;
+  position: absolute;
+  background-color: #232323;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  margin: -35px 0 0 -125px;
+
+  a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+
+    &:hover {
+      background-color: g.$crimson;
+      border-radius: 4px;
+    }
+  }
+}
+
+.settingBtn {
+  background-color: #232323;
+  width: 34px;
+  height: 34px;
+  border-radius: 17px;
+
+  &::after {
+    content: '\2807';
+    font-size: 20px;
+    color: white;
+    margin-left: 5px;
+  }
+}
