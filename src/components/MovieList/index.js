@@ -18,8 +18,8 @@ const MovieList = (props) => {
         {moviePreviews.map((preview, i) => (
           <MovieListItem
             {...preview}
-            openEditWindow={() => props.openEditWindow(preview)}
-            openDeleteWindow={() => props.openDeleteWindow(preview)}
+            open={props.open}
+            clickCard={props.clickCard}
             key={`${preview.title}_${i}`}
           />
         ))}

@@ -3,15 +3,16 @@ import styles from './style.module.scss';
 
 export default (props) => (
   <div className={styles.modal}>
-    <button className={styles.close} onClick={props.handleCloseModal} />
+    <button className={styles.close} onClick={props.close} />
     <span>{props.title} movie</span>
     <label className={styles.input}>
       title
       <input
         type="text"
         name="title"
+        value={props.movie.title ?? ''}
         placeholder="Movie title here"
-        onChange={props.handleChange}
+        onChange={props.change}
       />
     </label>
     <label className={styles.input}>
@@ -19,8 +20,9 @@ export default (props) => (
       <input
         type="date"
         name="releaseDate"
+        value={props.movie.releaseDate ?? ''}
         placeholder="Select Date"
-        onChange={props.handleChange}
+        onChange={props.change}
       />
     </label>
     <label className={styles.input}>
@@ -28,16 +30,18 @@ export default (props) => (
       <input
         type="url"
         name="imageUrl"
+        value={props.movie.imageUrl ?? ''}
         placeholder="Movie URL here"
-        onChange={props.handleChange}
+        onChange={props.change}
       />
     </label>
     <label className={styles.input}>
       genre
       <select
         name="genre"
+        value={props.movie.genre ?? ''}
         placeholder="Select Genre"
-        onChange={props.handleChange}
+        onChange={props.change}
       >
         <option value="Documentary">documentary</option>
         <option value="Comedy">comedy</option>
@@ -51,8 +55,9 @@ export default (props) => (
       <input
         type="text"
         name="overview"
+        value={props.movie.overview ?? ''}
         placeholder="Overview here"
-        onChange={props.handleChange}
+        onChange={props.change}
       />
     </label>
     <label className={styles.input}>
@@ -60,15 +65,16 @@ export default (props) => (
       <input
         type="number"
         name="runtime"
+        value={props.movie.runtime ?? ''}
         placeholder="Runtime here"
-        onChange={props.handleChange}
+        onChange={props.change}
       />
     </label>
     <div className={styles.buttons}>
-      <button className={styles.resetBtn} onClick={props.handleReset}>
+      <button className={styles.resetBtn} onClick={props.reset}>
         Reset
       </button>
-      <button className={styles.submitBtn} onClick={props.handleSubmit}>
+      <button className={styles.submitBtn} onClick={props.submit}>
         Submit
       </button>
     </div>

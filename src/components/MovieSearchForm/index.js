@@ -6,7 +6,7 @@ export default (props) => (
     <div className={styles.mainBlock}>
       <button
         className={styles.addMovieBtn}
-        onClick={props.openAddWindow}
+        onClick={() => props.open('add')}
       >
         +add movie
       </button>

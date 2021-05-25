@@ -9,16 +9,20 @@ const MoviesListItem = (props) => {
       <div className={styles.settingBlock}>
         <button className={styles.settingBtn}></button>
         <div className={styles.settingContent}>
-          <a onClick={props.openEditWindow}>Edit</a>
-          <a onClick={props.openDeleteWindow}>Delete</a>
+          <a onClick={() => props.open('edit', props)}>Edit</a>
+          <a onClick={() => props.open('delete', props)}>Delete</a>
         </div>
       </div>
-      <img src={imageUrl} className={styles.img} alt={imageDesc} />
-      <div className={styles.desc}>
-        <h2 className={styles.title}>{title}</h2>
-        <span className={styles.releaseDate}>{releaseDate.split('-')[0]}</span>
+      <div onClick={() => props.clickCard(props)}>
+        <img src={imageUrl} className={styles.img} alt={imageDesc} />
+        <div className={styles.desc}>
+          <h2 className={styles.title}>{title}</h2>
+          <span className={styles.releaseDate}>
+            {releaseDate.split('-')[0]}
+          </span>
+        </div>
+        <span className={styles.genre}>{genre}</span>
       </div>
-      <span className={styles.genre}>{genre}</span>
     </div>
   );
 };

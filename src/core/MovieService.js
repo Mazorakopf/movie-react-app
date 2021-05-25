@@ -109,3 +109,8 @@ export const deleteMovie = (movieToDelete) => {
   const movieIndex = movies.findIndex((movie) => movie.id === movieToDelete.id);
   movies.splice(movieIndex, 1);
 };
+
+export const updateMovie = (movieToUpdate) => {
+  const movieIndex = movies.findIndex((movie) => movie.id === movieToUpdate.id);
+  movies[movieIndex] = movieToUpdate;
+};
