@@ -93,10 +93,7 @@ const movies = [
   },
 ];
 
-const generateNextId = () => {
-  let lastId = movies[movies.length - 1].id;
-  return ++lastId;
-};
+const generateNextId = () => ++movies[movies.length - 1].id;
 
 export const getMoviePreviews = () => movies;
 

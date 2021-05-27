@@ -1,27 +1,33 @@
 import React from 'react';
-import styles from './style.module.scss';
+import { MovieModalType } from '../MovieModal/util';
+import PropTypes from 'prop-types';
+import S from './style.module.scss';
 
-export default (props) => (
+const MovieSearchForm = ({ openMovieModal }) => (
   <>
-    <div className={styles.mainBlock}>
-      <button
-        className={styles.addMovieBtn}
-        onClick={() => props.open('add')}
-      >
+    <div className={S.mainBlock}>
+      <button className={S.addMovieBtn} onClick={() => openMovieModal(MovieModalType.ADD)}>
         +add movie
       </button>
-      <div className={styles.searchBlock}>
-        <h1 className={styles.title}>Find your movie</h1>
-        <form className={styles.form}>
-          <input
-            className={styles.searchInput}
+      <div className={S.searchBlock}>
+        <h1 className={S.title}>Find your movie</h1>
+        <form className={S.form}>
+          <input 
+            className={S.searchInput}
             type="text"
             name="search"
             placeholder="What do you want to watch?"
           />
-          <input className={styles.submitBtn} type="submit" value="Search" />
+          <input className={S.submitBtn} type="submit" value="Search" />
         </form>
       </div>
     </div>
   </>
 );
+
+
+MovieSearchForm.propTypes = {
+  openMovieModal: PropTypes.func.isRequired,
+};
+
+export default MovieSearchForm;

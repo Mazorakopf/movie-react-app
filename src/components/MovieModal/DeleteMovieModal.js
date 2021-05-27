@@ -1,15 +1,23 @@
 import React from 'react';
-import styles from './style.module.scss';
+import PropTypes from 'prop-types';
+import S from './style.module.scss';
 
-export default (props) => (
-  <div className={styles.modal}>
-    <button className={styles.close} onClick={props.close} />
+const DeleteMovieModal = ({ closeMovieModal, submitMovieModal }) => (
+  <div className={S.modal}>
+    <button className={S.close} onClick={closeMovieModal} />
     <span>delete movie</span>
     <label>Are you sure you want to delete this movie?</label>
-    <div className={styles.buttons}>
-      <button className={styles.submitBtn} onClick={props.submit}>
+    <div className={S.buttons}>
+      <button className={S.submitBtn} onClick={submitMovieModal}>
         confirm
       </button>
     </div>
   </div>
 );
+
+DeleteMovieModal.propTypes = {
+  closeMovieModal: PropTypes.func.isRequired,
+  submitMovieModal: PropTypes.func.isRequired,
+};
+
+export default DeleteMovieModal;

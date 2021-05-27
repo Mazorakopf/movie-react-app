@@ -1,41 +1,48 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import styles from './style.module.scss';
+import React, { useState, useEffect } from 'react';
+import { MovieModalType } from './util';
+import PropTypes from 'prop-types';
 
 const DeleteMovieModal = React.lazy(() => import('./DeleteMovieModal'));
 const AddEditMovieModal = React.lazy(() => import('./AddEditMovieModal.js'));
 
-const empty = {};
-
-export default ({ type, submit, close, selectedMovie = empty }) => {
+const MovieModal = ({ type, selectedMovie, submitMovieModal, closeMovieModal }) => {
   const [movie, setMovie] = useState(selectedMovie);
 
   useEffect(() => setMovie(selectedMovie), [selectedMovie]);
 
-  const handleChange = (event) =>
-    setMovie({ ...movie, [event.target.name]: event.target.value });
-
-  const handleReset = () =>
-    Array.from(document.querySelectorAll(`.${styles.modal} input`)).forEach(
-      (input) => (input.value = '')
-    );
-
   const handleSubmit = () => {
-    submit(movie);
-    close();
+    submitMovieModal(movie);
+    closeMovieModal();
   };
 
-  if (type === 'add' || type === 'edit') {
+  if (type === MovieModalType.ADD || type === MovieModalType.EDIT) {
     return (
-      <AddEditMovieModal
-        title={type}
-        movie={movie}
-        close={close}
-        change={handleChange}
-        reset={handleReset}
-        submit={handleSubmit}
+      <AddEditMovieModal { ...{ title: type, movie, closeMovieModal, submitMovieModal: handleSubmit } }
+        onInputChanged={(event) => setMovie({ ...movie, [event.target.name]: event.target.value })}
+        resetMovieModal={() => setMovie(selectedMovie)}
       />
     );
-  } else if (type === 'delete') {
-    return <DeleteMovieModal close={close} submit={handleSubmit} />;
+  } else if (type === MovieModalType.DELETE) {
+    return <DeleteMovieModal { ...{ closeMovieModal, submitMovieModal: handleSubmit } } />;
   }
 };
+
+MovieModal.propTypes = {
+  type: PropTypes.string.isRequired,
+  selectedMovie: PropTypes.object,
+  submitMovieModal: PropTypes.func.isRequired,
+  closeMovieModal: PropTypes.func.isRequired,
+};
+
+MovieModal.defaultProps = {
+  selectedMovie: {
+    title: '',
+    releaseDate: new Date().toISOString(),
+    imageUrl: '',
+    genre: 'Documentary',
+    overview: '',
+    runtime: 0,
+  }
+};
+
+export default MovieModal;

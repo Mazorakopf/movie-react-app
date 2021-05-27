@@ -1,38 +1,42 @@
 import React from 'react';
-import styles from './style.module.scss';
+import { MovieModalType } from '../../MovieModal/util';
 import PropTypes from 'prop-types';
+import S from './style.module.scss';
 
-const MoviesListItem = (props) => {
-  const { imageUrl, imageDesc, title, releaseDate, genre } = props;
+const MoviesListItem = ({ movie, openMovieModal, openMovieDetails }) => {
   return (
-    <div className={styles.item}>
-      <div className={styles.settingBlock}>
-        <button className={styles.settingBtn}></button>
-        <div className={styles.settingContent}>
-          <a onClick={() => props.open('edit', props)}>Edit</a>
-          <a onClick={() => props.open('delete', props)}>Delete</a>
+    <div className={S.item}>
+      <div className={S.settingBlock}>
+        <button className={S.settingBtn}></button>
+        <div className={S.settingContent}>
+          <a onClick={() => openMovieModal(MovieModalType.EDIT, movie)}>Edit</a>
+          <a onClick={() => openMovieModal(MovieModalType.DELETE, movie)}>Delete</a>
         </div>
       </div>
-      <div onClick={() => props.clickCard(props)}>
-        <img src={imageUrl} className={styles.img} alt={imageDesc} />
-        <div className={styles.desc}>
-          <h2 className={styles.title}>{title}</h2>
-          <span className={styles.releaseDate}>
-            {releaseDate.split('-')[0]}
+      <div onClick={() => openMovieDetails(movie)}>
+        <img src={movie.imageUrl} className={S.img} alt={movie.imageDesc} />
+        <div className={S.desc}>
+          <h2 className={S.title}>{movie.title}</h2>
+          <span className={S.releaseDate}>
+            {movie.releaseDate.split('-')[0]}
           </span>
         </div>
-        <span className={styles.genre}>{genre}</span>
+        <span className={S.genre}>{movie.genre}</span>
       </div>
     </div>
   );
 };
 
 MoviesListItem.propTypes = {
-  imageUrl: PropTypes.string.isRequired,
-  imageDesc: PropTypes.string,
-  title: PropTypes.string.isRequired,
-  releaseDate: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
+  movie: PropTypes.shape({
+    imageUrl: PropTypes.string.isRequired,
+    imageDesc: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    releaseDate: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
+  }),
+  openMovieModal: PropTypes.func.isRequired,
+  openMovieDetails: PropTypes.func.isRequired,
 };
 
 export default MoviesListItem;

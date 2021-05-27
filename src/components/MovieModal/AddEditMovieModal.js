@@ -1,47 +1,55 @@
 import React from 'react';
-import styles from './style.module.scss';
+import PropTypes from 'prop-types';
+import S from './style.module.scss';
 
-export default (props) => (
-  <div className={styles.modal}>
-    <button className={styles.close} onClick={props.close} />
-    <span>{props.title} movie</span>
-    <label className={styles.input}>
+const AddEditMovieModal = ({
+  title,
+  movie,
+  closeMovieModal,
+  submitMovieModal,
+  onInputChanged,
+  resetMovieModal,
+}) => (
+  <div className={S.modal}>
+    <button className={S.close} onClick={closeMovieModal} />
+    <span>{title} movie</span>
+    <label className={S.input}>
       title
       <input
         type="text"
         name="title"
-        value={props.movie.title ?? ''}
+        value={movie.title}
         placeholder="Movie title here"
-        onChange={props.change}
+        onChange={onInputChanged}
       />
     </label>
-    <label className={styles.input}>
+    <label className={S.input}>
       release date
       <input
         type="date"
         name="releaseDate"
-        value={props.movie.releaseDate ?? ''}
+        value={movie.releaseDate}
         placeholder="Select Date"
-        onChange={props.change}
+        onChange={onInputChanged}
       />
     </label>
-    <label className={styles.input}>
+    <label className={S.input}>
       movie url
       <input
         type="url"
         name="imageUrl"
-        value={props.movie.imageUrl ?? ''}
+        value={movie.imageUrl}
         placeholder="Movie URL here"
-        onChange={props.change}
+        onChange={onInputChanged}
       />
     </label>
-    <label className={styles.input}>
+    <label className={S.input}>
       genre
       <select
         name="genre"
-        value={props.movie.genre ?? ''}
+        value={movie.genre}
         placeholder="Select Genre"
-        onChange={props.change}
+        onChange={onInputChanged}
       >
         <option value="Documentary">documentary</option>
         <option value="Comedy">comedy</option>
@@ -50,33 +58,44 @@ export default (props) => (
         <option value="Action & Adventure">action & adventure</option>
       </select>
     </label>
-    <label className={styles.input}>
+    <label className={S.input}>
       overview
       <input
         type="text"
         name="overview"
-        value={props.movie.overview ?? ''}
+        value={movie.overview}
         placeholder="Overview here"
-        onChange={props.change}
+        onChange={onInputChanged}
       />
     </label>
-    <label className={styles.input}>
+    <label className={S.input}>
       runtime
       <input
         type="number"
         name="runtime"
-        value={props.movie.runtime ?? ''}
+        value={movie.runtime}
         placeholder="Runtime here"
-        onChange={props.change}
+        onChange={onInputChanged}
       />
     </label>
-    <div className={styles.buttons}>
-      <button className={styles.resetBtn} onClick={props.reset}>
+    <div className={S.buttons}>
+      <button className={S.resetBtn} onClick={resetMovieModal}>
         Reset
       </button>
-      <button className={styles.submitBtn} onClick={props.submit}>
+      <button className={S.submitBtn} onClick={submitMovieModal}>
         Submit
       </button>
     </div>
   </div>
 );
+
+AddEditMovieModal.propTypes = {
+  title: PropTypes.string.isRequired,
+  movie: PropTypes.object.isRequired,
+  closeMovieModal: PropTypes.func.isRequired,
+  submitMovieModal: PropTypes.func.isRequired,
+  onInputChanged: PropTypes.func.isRequired,
+  resetMovieModal: PropTypes.func.isRequired,
+};
+
+export default AddEditMovieModal;
