@@ -15,16 +15,18 @@ const MovieModal = ({ type, selectedMovie, submitMovieModal, closeMovieModal }) 
     closeMovieModal();
   };
 
-  if (type === MovieModalType.ADD || type === MovieModalType.EDIT) {
-    return (
-      <AddEditMovieModal { ...{ title: type, movie, closeMovieModal, submitMovieModal: handleSubmit } }
-        onInputChanged={(event) => setMovie({ ...movie, [event.target.name]: event.target.value })}
-        resetMovieModal={() => setMovie(selectedMovie)}
-      />
-    );
-  } else if (type === MovieModalType.DELETE) {
-    return <DeleteMovieModal { ...{ closeMovieModal, submitMovieModal: handleSubmit } } />;
-  }
+  if (type === MovieModalType.ADD || type === MovieModalType.EDIT) return (
+    <AddEditMovieModal { ...{ title: type, movie, closeMovieModal, submitMovieModal: handleSubmit } }
+      onInputChanged={(event) => setMovie({ ...movie, [event.target.name]: event.target.value })}
+      resetMovieModal={() => setMovie(selectedMovie)}
+    />
+  );
+  
+  if (type === MovieModalType.DELETE) return (
+    <DeleteMovieModal { ...{ closeMovieModal, submitMovieModal: handleSubmit } } />
+  );
+  
+  return null;
 };
 
 MovieModal.propTypes = {

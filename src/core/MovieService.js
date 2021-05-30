@@ -93,7 +93,7 @@ const movies = [
   },
 ];
 
-const generateNextId = () => ++movies[movies.length - 1].id;
+const generateNextId = () => movies[movies.length - 1].id + 1;
 
 export const getMoviePreviews = () => movies;
 

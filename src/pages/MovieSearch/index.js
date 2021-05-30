@@ -9,15 +9,10 @@ const MovieModal = React.lazy(() => import('../../components/MovieModal'));
 const MovieDetails = React.lazy(() => import('../../components/MovieDetails'));
 
 const reducer = (state, action) => {
-  if (action.type === MovieModalType.ADD) {
-    return { ...action, submit: (movie) => MovieService.addMovie(movie) };
-  } else if (action.type === MovieModalType.EDIT) {
-    return { ...action, submit: (movie) => MovieService.updateMovie(movie) };
-  } else if (action.type === MovieModalType.DELETE) {
-    return { ...action, submit: (movie) => MovieService.deleteMovie(movie) };
-  } else {
-    return { ...action };
-  }
+  if (action.type === MovieModalType.ADD) return { ...action, submit: (movie) => MovieService.addMovie(movie) };
+  if (action.type === MovieModalType.EDIT) return { ...action, submit: (movie) => MovieService.updateMovie(movie) };
+  if (action.type === MovieModalType.DELETE) return { ...action, submit: (movie) => MovieService.deleteMovie(movie) };
+  return { ...action };
 };
 
 export default () => {

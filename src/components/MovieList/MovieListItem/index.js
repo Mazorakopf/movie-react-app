@@ -34,7 +34,7 @@ MoviesListItem.propTypes = {
     title: PropTypes.string.isRequired,
     releaseDate: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
   openMovieModal: PropTypes.func.isRequired,
   openMovieDetails: PropTypes.func.isRequired,
 };
