@@ -1,70 +1,50 @@
-import React from 'react';
-import styles from './style.module.scss';
+import React, { useState, useEffect } from 'react';
+import { MovieModalType } from './util';
+import PropTypes from 'prop-types';
 
 const DeleteMovieModal = React.lazy(() => import('./DeleteMovieModal'));
 const AddEditMovieModal = React.lazy(() => import('./AddEditMovieModal.js'));
 
-export default class MovieModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { movie: this.props.selectedMovie ?? {} };
-    console.log(this.state);
+const MovieModal = ({ type, selectedMovie, submitMovieModal, closeMovieModal }) => {
+  const [movie, setMovie] = useState(selectedMovie);
 
-    this.handleCloseModal = this.handleCloseModal.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleReset = this.handleReset.bind(this);
+  useEffect(() => setMovie(selectedMovie), [selectedMovie]);
+
+  const handleSubmit = () => {
+    submitMovieModal(movie);
+    closeMovieModal();
+  };
+
+  if (type === MovieModalType.ADD || type === MovieModalType.EDIT) return (
+    <AddEditMovieModal { ...{ title: type, movie, closeMovieModal, submitMovieModal: handleSubmit } }
+      onInputChanged={(event) => setMovie({ ...movie, [event.target.name]: event.target.value })}
+      resetMovieModal={() => setMovie(selectedMovie)}
+    />
+  );
+  
+  if (type === MovieModalType.DELETE) return (
+    <DeleteMovieModal { ...{ closeMovieModal, submitMovieModal: handleSubmit } } />
+  );
+  
+  return null;
+};
+
+MovieModal.propTypes = {
+  type: PropTypes.string.isRequired,
+  selectedMovie: PropTypes.object,
+  submitMovieModal: PropTypes.func.isRequired,
+  closeMovieModal: PropTypes.func.isRequired,
+};
+
+MovieModal.defaultProps = {
+  selectedMovie: {
+    title: '',
+    releaseDate: new Date().toISOString(),
+    imageUrl: '',
+    genre: 'Documentary',
+    overview: '',
+    runtime: 0,
   }
+};
 
-  handleReset() {
-    Array.from(document.querySelectorAll(`.${styles.modal} input`)).forEach(
-      (input) => (input.value = '')
-    );
-
-    this.setState({ movie: {} });
-  }
-
-  handleCloseModal() {
-    this.props.close();
-    this.handleReset();
-  }
-
-  handleChange(event) {
-    this.state.movie[event.target.name] = event.target.value;
-  }
-
-  handleSubmit() {
-    this.props.submit(this.state.movie);
-    this.handleCloseModal();
-  }
-
-  componentDidMount() {
-    Object.entries(this.state.movie).forEach(([key, value]) => {
-      const el = document.querySelector(`.${styles.modal} input[name=${key}]`);
-      if (el) el.value = value;
-      const select =  document.querySelector(`.${styles.modal} select[name=${key}]`);
-      if (select) select.value = value;
-    });
-  }
-
-  render() {
-    if (this.props.type === 'delete') {
-      return (
-        <DeleteMovieModal
-          handleCloseModal={this.handleCloseModal}
-          handleSubmit={this.handleSubmit}
-        />
-      );
-    } else if (this.props.type === 'add' || this.props.type === 'edit') {
-      return (
-        <AddEditMovieModal
-          title={this.props.type}
-          handleCloseModal={this.handleCloseModal}
-          handleChange={this.handleChange}
-          handleReset={this.handleReset}
-          handleSubmit={this.handleSubmit}
-        />
-      );
-    } 
-  }
-}
+export default MovieModal;

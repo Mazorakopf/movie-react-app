@@ -1,6 +1,11 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { resolve } = require('path');
 
+const localIdentName =
+  process.env.NODE_ENV === 'development'
+    ? '[path][name]__[local]'
+    : '[hash:base64]';
+
 module.exports = {
   entry: resolve('./src/index.js'),
   output: {
@@ -19,7 +24,16 @@ module.exports = {
       },
       {
         test: /\.module\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: { localIdentName },
+            },
+          },
+          'sass-loader',
+        ],
       },
       {
         test: /\.(jpg|png)$/,

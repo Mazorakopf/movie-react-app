@@ -93,10 +93,7 @@ const movies = [
   },
 ];
 
-const generateNextId = () => {
-  let lastId = movies[movies.length - 1].id;
-  return ++lastId;
-};
+const generateNextId = () => movies[movies.length - 1].id + 1;
 
 export const getMoviePreviews = () => movies;
 
@@ -108,4 +105,9 @@ export const addMovie = (movie) => {
 export const deleteMovie = (movieToDelete) => {
   const movieIndex = movies.findIndex((movie) => movie.id === movieToDelete.id);
   movies.splice(movieIndex, 1);
+};
+
+export const updateMovie = (movieToUpdate) => {
+  const movieIndex = movies.findIndex((movie) => movie.id === movieToUpdate.id);
+  movies[movieIndex] = movieToUpdate;
 };

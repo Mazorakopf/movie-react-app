@@ -1,94 +1,43 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useReducer, useState } from 'react';
 import MovieList from '../../components/MovieList';
 import MovieSearchForm from '../../components/MovieSearchForm';
+import Loading from '../../shared/Loading';
 import * as MovieService from '../../core/MovieService';
+import { MovieModalType } from '../../components/MovieModal/util';
 
 const MovieModal = React.lazy(() => import('../../components/MovieModal'));
+const MovieDetails = React.lazy(() => import('../../components/MovieDetails'));
 
-export default class MovieSearch extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      movies: MovieService.getMoviePreviews(),
-      selectedMovie: {},
-      addWindow: false,
-      editWindow: false, 
-      deleteWindow: false,  
-    };
+const reducer = (state, action) => {
+  if (action.type === MovieModalType.ADD) return { ...action, submit: (movie) => MovieService.addMovie(movie) };
+  if (action.type === MovieModalType.EDIT) return { ...action, submit: (movie) => MovieService.updateMovie(movie) };
+  if (action.type === MovieModalType.DELETE) return { ...action, submit: (movie) => MovieService.deleteMovie(movie) };
+  return { ...action };
+};
 
-    this.refreshMovieList = this.refreshMovieList.bind(this);
-    this.openModalWindow = this.openModalWindow.bind(this);
-    this.handleSubmitAddWindow = this.handleSubmitAddWindow.bind(this);
-    this.handleSubmitEditWindow = this.handleSubmitEditWindow.bind(this);
-  }
+export default () => {
+  const [movies] = useState(MovieService.getMoviePreviews());
+  const [state, dispatch] = useReducer(reducer, {});
 
-  refreshMovieList() {
-    this.setState({ movies: MovieService.getMoviePreviews() });
-  }
-
-  openModalWindow(type, isOpen, selectedMovie = {}) {
-    this.setState(() => {
-      if (type === 'addWindow') {
-        return { addWindow: isOpen };
-      } else if (type === 'editWindow') {
-        return { selectedMovie, editWindow: isOpen };
-      } else if (type === 'deleteWindow') {
-        return { selectedMovie, deleteWindow: isOpen };
-      }
-    });
-  }
-
-  handleSubmitAddWindow(movie) {
-    MovieService.addMovie(movie);
-    this.refreshMovieList();
-  }
-
-  handleSubmitEditWindow(movie) {
-    this.refreshMovieList();
-  }
-
-  handleSubmitDeleteWindow(movie) {
-    MovieService.deleteMovie(movie);
-    this.refreshMovieList();
-  }
-
-  render() {
-    return (
-      <>
-        <MovieSearchForm
-          openAddWindow={() => this.openModalWindow('addWindow', true)}
-        />
-        <MovieList
-          openEditWindow={(movie) => this.openModalWindow('editWindow', true, movie)}
-          openDeleteWindow={(movie) => this.openModalWindow('deleteWindow', true, movie)}
-          moviePreviews={this.state.movies}
-        />
-        <Suspense fallback={<div>Loading...</div>}>
-          {this.state.addWindow && (
-            <MovieModal
-              type="add"
-              submit={(movie) => this.handleSubmitAddWindow(movie)}
-              close={() => this.openModalWindow('addWindow', false)}
-            />
-          )}
-          {this.state.editWindow && (
-            <MovieModal
-              type="edit"
-              selectedMovie={this.state.selectedMovie}
-              submit={(movie) => this.handleSubmitEditWindow(movie)}
-              close={() => this.openModalWindow('editWindow', false)}
-            />
-          )}
-          {this.state.deleteWindow && (
-            <MovieModal
-              type="delete"
-              selectedMovie={this.state.selectedMovie}
-              submit={(movie) => this.handleSubmitDeleteWindow(movie)}
-              close={() => this.openModalWindow('deleteWindow', false)}
-            />
-          )}
-        </Suspense>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      {state.selectedMovie && !state.active ? 
+        (<Suspense fallback={<Loading />}>
+          <MovieDetails movie={state.selectedMovie} openMovieSearchForm={() => dispatch({})} />
+        </Suspense>) 
+        : (<MovieSearchForm openMovieModal={(type) => dispatch({ type, active: true })} />
+      )}
+      <MovieList movies={movies}
+        openMovieModal={(type, selectedMovie) => dispatch({ type, active: true, selectedMovie })}
+        openMovieDetails={(selectedMovie) => dispatch({ selectedMovie })}
+      />
+      <Suspense fallback={<Loading />}>
+        {state.active && (
+          <MovieModal type={state.type} selectedMovie={state.selectedMovie} submitMovieModal={state.submit}
+            closeMovieModal={() => dispatch({ type: state.type, active: false })}
+          />
+        )}
+      </Suspense>
+    </>
+  );
+};
