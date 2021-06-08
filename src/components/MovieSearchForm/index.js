@@ -3,10 +3,19 @@ import { MovieModalType } from '../MovieModal/util';
 import PropTypes from 'prop-types';
 import S from './style.module.scss';
 
+const defaultMovie = {
+  title: '',
+  release_date: new Date().toISOString().split('T')[0],
+  poster_path: '',
+  genre: 'Documentary',
+  overview: '',
+  runtime: 0,
+};
+
 const MovieSearchForm = ({ openMovieModal }) => (
   <>
     <div className={S.mainBlock}>
-      <button className={S.addMovieBtn} onClick={() => openMovieModal(MovieModalType.ADD)}>
+      <button className={S.addMovieBtn} onClick={() => openMovieModal(MovieModalType.ADD, defaultMovie)}>
         +add movie
       </button>
       <div className={S.searchBlock}>

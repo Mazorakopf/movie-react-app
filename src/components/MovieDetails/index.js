@@ -5,14 +5,15 @@ import S from './style.module.scss';
 
 const MovieDetails = ({ movie, openMovieSearchForm }) => (
   <div className={S.overviewBlock}>
-    <img src={movie.imageUrl} className={S.img} alt={movie.imageDesc} />
+    <img src={movie.poster_path} className={S.img} alt="Movie details pic" />
     <div className={S.descBlock}>
       <h2 className={S.title}>{movie.title}</h2>
       <span className={S.genre}>{movie.genre}</span>
       <div className={S.subDescBlock}>
-        <span className={S.releaseDate}>{movie.releaseDate.split('-')[0]}</span>
+        <span className={S.releaseDate}>{movie.release_year}</span>
         <span className={S.runtime}>{movie.runtime} min</span>
       </div>
+      <span className={S.overviewText}>{movie.overview}</span>
     </div>
     <button className={S.searchBtn} onClick={openMovieSearchForm}>
       <SearchGlass className={S.searchGlass} />
@@ -22,10 +23,9 @@ const MovieDetails = ({ movie, openMovieSearchForm }) => (
 
 MovieDetails.propTypes = {
   movie: PropTypes.shape({
-    imageUrl: PropTypes.string.isRequired,
-    imageDesc: PropTypes.string,
+    poster_path: PropTypes.string,
     title: PropTypes.string.isRequired,
-    releaseDate: PropTypes.string.isRequired,
+    release_date: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
     runtime: PropTypes.number.isRequired,
   }),

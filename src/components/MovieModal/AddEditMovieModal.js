@@ -27,8 +27,8 @@ const AddEditMovieModal = ({
       release date
       <input
         type="date"
-        name="releaseDate"
-        value={movie.releaseDate}
+        name="release_date"
+        value={movie.release_date}
         placeholder="Select Date"
         onChange={onInputChanged}
       />
@@ -37,8 +37,8 @@ const AddEditMovieModal = ({
       movie url
       <input
         type="url"
-        name="imageUrl"
-        value={movie.imageUrl}
+        name="poster_path"
+        value={movie.poster_path}
         placeholder="Movie URL here"
         onChange={onInputChanged}
       />
@@ -55,7 +55,11 @@ const AddEditMovieModal = ({
         <option value="Comedy">comedy</option>
         <option value="Horror">horror</option>
         <option value="Crime">crime</option>
-        <option value="Action & Adventure">action & adventure</option>
+        <option value="Action">Action</option>
+        <option value="Adventure">Adventure</option>
+        <option value="Drama">Drama</option>
+        <option value="Family">Family</option>
+        <option value="Fantasy">Fantasy</option>
       </select>
     </label>
     <label className={S.input}>
@@ -97,5 +101,16 @@ AddEditMovieModal.propTypes = {
   onInputChanged: PropTypes.func.isRequired,
   resetMovieModal: PropTypes.func.isRequired,
 };
+
+AddEditMovieModal.defaultProps = {
+  movie: {
+    title: '',
+    release_date: new Date().toISOString().split('T')[0],
+    poster_path: '',
+    genre: 'Documentary',
+    overview: '',
+    runtime: 0,
+  },
+}
 
 export default AddEditMovieModal;

@@ -14,11 +14,11 @@ const MoviesListItem = ({ movie, openMovieModal, openMovieDetails }) => {
         </div>
       </div>
       <div onClick={() => openMovieDetails(movie)}>
-        <img src={movie.imageUrl} className={S.img} alt={movie.imageDesc} />
+        <img src={movie.poster_path} className={S.img} alt="Movie poster" />
         <div className={S.desc}>
           <h2 className={S.title}>{movie.title}</h2>
           <span className={S.releaseDate}>
-            {movie.releaseDate.split('-')[0]}
+            {movie.release_year}
           </span>
         </div>
         <span className={S.genre}>{movie.genre}</span>
@@ -29,10 +29,9 @@ const MoviesListItem = ({ movie, openMovieModal, openMovieDetails }) => {
 
 MoviesListItem.propTypes = {
   movie: PropTypes.shape({
-    imageUrl: PropTypes.string.isRequired,
-    imageDesc: PropTypes.string,
+    poster_path: PropTypes.string,
     title: PropTypes.string.isRequired,
-    releaseDate: PropTypes.string.isRequired,
+    release_year: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
   }).isRequired,
   openMovieModal: PropTypes.func.isRequired,

@@ -4,9 +4,9 @@ import MovieNavbar from './MovieNavBar';
 import MovieListItem from './MovieListItem';
 import S from './style.module.scss';
 
-const MovieList = ({ movies, openMovieModal, openMovieDetails }) => (
+const MovieList = ({ movies, openMovieModal, openMovieDetails, sortMovies, filterMoviesByGenre }) => (
   <div className={S.mainBlock}>
-    <MovieNavbar />
+    <MovieNavbar { ...{ sortMovies, filterMoviesByGenre } }/>
     <span className={S.counter}>
       <span className={S.count}>{movies.length}</span> movies found
     </span>
@@ -22,6 +22,8 @@ MovieList.propTypes = {
   movies: PropTypes.array.isRequired,
   openMovieModal: PropTypes.func.isRequired,
   openMovieDetails: PropTypes.func.isRequired,
+  sortMovies: PropTypes.func.isRequired,
+  filterMoviesByGenre: PropTypes.func.isRequired,
 };
 
 export default MovieList;
