@@ -1,7 +1,7 @@
 import React from 'react';
 import S from './style.module.scss';
 
-export default ({ sortMovies, filterMoviesByGenre }) => (
+const MovieNavBar = ({ sortMovies, filterMoviesByGenre }) => (
   <ul className={S.navBar}>
     <li className={S.left}><a onClick={filterMoviesByGenre()}>all</a></li>
     <li className={S.left}><a onClick={filterMoviesByGenre('Documentary')}>documentary</a></li>
@@ -18,3 +18,10 @@ export default ({ sortMovies, filterMoviesByGenre }) => (
     </li>
   </ul>
 );
+
+MovieNavBar.propTypes = {
+  sortMovies: PropTypes.func.isRequired,
+  filterMoviesByGenre: PropTypes.func.isRequired,
+};
+
+export default MovieNavBar;
