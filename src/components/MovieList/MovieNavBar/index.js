@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { filterMoviesByGenre, sortMovies } from '../../../pages/MovieSearch/action.creator';
 import S from './style.module.scss';
 
 const MovieNavBar = ({ sortMovies, filterMoviesByGenre }) => (
@@ -24,4 +27,9 @@ MovieNavBar.propTypes = {
   filterMoviesByGenre: PropTypes.func.isRequired,
 };
 
-export default MovieNavBar;
+const mapDispatchToProps = (dispatch) => ({
+  sortMovies: sortMovies(dispatch),
+  filterMoviesByGenre: filterMoviesByGenre(dispatch),
+});
+
+export default connect(null, mapDispatchToProps)(MovieNavBar);

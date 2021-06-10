@@ -1,6 +1,8 @@
 import React from 'react';
 import { MovieModalType } from '../MovieModal/util';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { openMovieModal } from '../../pages/MovieSearch/action.creator';
 import S from './style.module.scss';
 
 const defaultMovie = {
@@ -39,4 +41,8 @@ MovieSearchForm.propTypes = {
   openMovieModal: PropTypes.func.isRequired,
 };
 
-export default MovieSearchForm;
+const mapDispatchToProps = (dispatch) => ({
+  openMovieModal: openMovieModal(dispatch),
+});
+
+export default connect(null, mapDispatchToProps)(MovieSearchForm);

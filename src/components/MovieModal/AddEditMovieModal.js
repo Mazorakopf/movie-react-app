@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { changeSelectedMovie, closeMovieModal, resetMovieModal, submitMovieModal } from '../../pages/MovieSearch/action.creator';
 import S from './style.module.scss';
 
 const AddEditMovieModal = ({
@@ -7,7 +9,7 @@ const AddEditMovieModal = ({
   movie,
   closeMovieModal,
   submitMovieModal,
-  onInputChanged,
+  changeSelectedMovie,
   resetMovieModal,
 }) => (
   <div className={S.modal}>
@@ -20,7 +22,7 @@ const AddEditMovieModal = ({
         name="title"
         value={movie.title}
         placeholder="Movie title here"
-        onChange={onInputChanged}
+        onChange={changeSelectedMovie}
       />
     </label>
     <label className={S.input}>
@@ -30,7 +32,7 @@ const AddEditMovieModal = ({
         name="release_date"
         value={movie.release_date}
         placeholder="Select Date"
-        onChange={onInputChanged}
+        onChange={changeSelectedMovie}
       />
     </label>
     <label className={S.input}>
@@ -40,7 +42,7 @@ const AddEditMovieModal = ({
         name="poster_path"
         value={movie.poster_path}
         placeholder="Movie URL here"
-        onChange={onInputChanged}
+        onChange={changeSelectedMovie}
       />
     </label>
     <label className={S.input}>
@@ -49,7 +51,7 @@ const AddEditMovieModal = ({
         name="genre"
         value={movie.genre}
         placeholder="Select Genre"
-        onChange={onInputChanged}
+        onChange={changeSelectedMovie}
       >
         <option value="Documentary">documentary</option>
         <option value="Comedy">comedy</option>
@@ -69,7 +71,7 @@ const AddEditMovieModal = ({
         name="overview"
         value={movie.overview}
         placeholder="Overview here"
-        onChange={onInputChanged}
+        onChange={changeSelectedMovie}
       />
     </label>
     <label className={S.input}>
@@ -79,7 +81,7 @@ const AddEditMovieModal = ({
         name="runtime"
         value={movie.runtime}
         placeholder="Runtime here"
-        onChange={onInputChanged}
+        onChange={changeSelectedMovie}
       />
     </label>
     <div className={S.buttons}>
@@ -98,7 +100,7 @@ AddEditMovieModal.propTypes = {
   movie: PropTypes.object.isRequired,
   closeMovieModal: PropTypes.func.isRequired,
   submitMovieModal: PropTypes.func.isRequired,
-  onInputChanged: PropTypes.func.isRequired,
+  changeSelectedMovie: PropTypes.func.isRequired,
   resetMovieModal: PropTypes.func.isRequired,
 };
 
@@ -113,4 +115,16 @@ AddEditMovieModal.defaultProps = {
   },
 }
 
-export default AddEditMovieModal;
+const mapStateToProps = ({ movieSearchPage }) => ({
+  title: movieSearchPage.modalType,
+  movie: movieSearchPage.selectedMovie,
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  closeMovieModal: closeMovieModal(dispatch),
+  submitMovieModal: submitMovieModal(dispatch, ownProps),
+  resetMovieModal: resetMovieModal(dispatch, ownProps),
+  changeSelectedMovie: changeSelectedMovie(dispatch, ownProps),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddEditMovieModal);

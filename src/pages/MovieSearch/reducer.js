@@ -1,4 +1,4 @@
-import { ActionTypes } from './action';
+import { ActionTypes } from './action.creator';
 
 const initialState = {
   movies: [],

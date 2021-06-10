@@ -129,7 +129,7 @@ export const resetMovieModal = (dispatch, { selectedMovie }) => () =>
 export const closeMovieModal = (dispatch) => (modalType) =>
   dispatch({ type: ActionTypes.CLOSE_MOVIE_MODAL, modalType });
 
-export const onInputChanged = (dispatch, { selectedMovie }) => (event) =>
+export const changeSelectedMovie = (dispatch, { selectedMovie }) => (event) =>
     dispatch({
       type: ActionTypes.CHANGE_MOVIE_INPUT,
       payload: {

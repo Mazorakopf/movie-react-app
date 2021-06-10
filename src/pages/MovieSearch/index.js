@@ -3,19 +3,12 @@ import MovieList from '../../components/MovieList';
 import MovieSearchForm from '../../components/MovieSearchForm';
 import Loading from '../../shared/Loading';
 import { connect } from 'react-redux';
-import * as Actions from './action';
+import { fetchAllMovies } from './action.creator';
 
 const MovieModal = React.lazy(() => import('../../components/MovieModal'));
 const MovieDetails = React.lazy(() => import('../../components/MovieDetails'));
 
-const MovieSearch = ({ 
-  movies, loading, selectedMovie, 
-  movieDetails, movieModal, 
-  modalType, fetchAllMovies, 
-  openMovieDetails, openMovieModal, 
-  openMovieSearchForm, sortMovies, 
-  filterMoviesByGenre
-}) => {
+const MovieSearch = ({ loading, movieDetails, movieModal, modalType, fetchAllMovies }) => {
   useEffect(() => {
     if (modalType === '') {
       fetchAllMovies();
@@ -24,36 +17,28 @@ const MovieSearch = ({
 
   return (
     <>
-      {movieDetails ? 
-        (<Suspense fallback={<Loading />}>
-          <MovieDetails { ...{ movie: selectedMovie, openMovieSearchForm } } />
-        </Suspense>) 
-        : (<MovieSearchForm { ...{ openMovieModal } } />
-      )}
-      {loading ? <Loading /> : <MovieList { ...{ movies, openMovieModal, openMovieDetails, sortMovies, filterMoviesByGenre } } />}
+      {movieDetails 
+        ? <Suspense fallback={<Loading />}><MovieDetails /></Suspense> 
+        : <MovieSearchForm />}
+      {loading 
+        ? <Loading /> 
+        : <MovieList />}
       <Suspense fallback={<Loading />}>
-        {movieModal && <MovieModal { ...{ modalType, selectedMovie } } />}
+        {movieModal && <MovieModal />}
       </Suspense>
     </>
   );
 };
 
 const mapStateToProps = ({ movieSearchPage }) => ({
-  movies: movieSearchPage.movies,
   loading: movieSearchPage.loading,
-  selectedMovie: movieSearchPage.selectedMovie,
   movieDetails: movieSearchPage.movieDetails,
   movieModal: movieSearchPage.movieModal,
   modalType: movieSearchPage.modalType,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchAllMovies: Actions.fetchAllMovies(dispatch),
-  openMovieDetails: Actions.openMovieDetails(dispatch),
-  openMovieModal: Actions.openMovieModal(dispatch),
-  openMovieSearchForm: Actions.openMovieSearchForm(dispatch),
-  sortMovies: Actions.sortMovies(dispatch),
-  filterMoviesByGenre: Actions.filterMoviesByGenre(dispatch),
+  fetchAllMovies: fetchAllMovies(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieSearch);

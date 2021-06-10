@@ -1,6 +1,8 @@
 import React from 'react';
 import { MovieModalType } from '../../MovieModal/util';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { openMovieDetails, openMovieModal } from '../../../pages/MovieSearch/action.creator';
 import S from './style.module.scss';
 
 const MoviesListItem = ({ movie, openMovieModal, openMovieDetails }) => {
@@ -38,4 +40,9 @@ MoviesListItem.propTypes = {
   openMovieDetails: PropTypes.func.isRequired,
 };
 
-export default MoviesListItem;
+const mapDispatchToProps = (dispatch) => ({
+  openMovieDetails: openMovieDetails(dispatch),
+  openMovieModal: openMovieModal(dispatch),
+});
+
+export default connect(null, mapDispatchToProps)(MoviesListItem);

@@ -2,18 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SearchGlass from '../../assets/svg/glass.svg';
 import S from './style.module.scss';
+import { connect } from 'react-redux';
+import { openMovieSearchForm } from '../../pages/MovieSearch/action.creator';
 
-const MovieDetails = ({ movie, openMovieSearchForm }) => (
+const MovieDetails = ({ selectedMovie, openMovieSearchForm }) => (
   <div className={S.overviewBlock}>
-    <img src={movie.poster_path} className={S.img} alt="Movie details pic" />
+    <img src={selectedMovie.poster_path} className={S.img} alt="Movie details pic" />
     <div className={S.descBlock}>
-      <h2 className={S.title}>{movie.title}</h2>
-      <span className={S.genre}>{movie.genre}</span>
+      <h2 className={S.title}>{selectedMovie.title}</h2>
+      <span className={S.genre}>{selectedMovie.genre}</span>
       <div className={S.subDescBlock}>
-        <span className={S.releaseDate}>{movie.release_year}</span>
-        <span className={S.runtime}>{movie.runtime} min</span>
+        <span className={S.releaseDate}>{selectedMovie.release_year}</span>
+        <span className={S.runtime}>{selectedMovie.runtime} min</span>
       </div>
-      <span className={S.overviewText}>{movie.overview}</span>
+      <span className={S.overviewText}>{selectedMovie.overview}</span>
     </div>
     <button className={S.searchBtn} onClick={openMovieSearchForm}>
       <SearchGlass className={S.searchGlass} />
@@ -22,7 +24,7 @@ const MovieDetails = ({ movie, openMovieSearchForm }) => (
 );
 
 MovieDetails.propTypes = {
-  movie: PropTypes.shape({
+  selectedMovie: PropTypes.shape({
     poster_path: PropTypes.string,
     title: PropTypes.string.isRequired,
     release_date: PropTypes.string.isRequired,
@@ -32,4 +34,12 @@ MovieDetails.propTypes = {
   openMovieSearchForm: PropTypes.func.isRequired,
 };
 
-export default MovieDetails;
+const mapStateToProps = ({ movieSearchPage }) => ({
+  selectedMovie: movieSearchPage.selectedMovie,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  openMovieSearchForm: openMovieSearchForm(dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieDetails);

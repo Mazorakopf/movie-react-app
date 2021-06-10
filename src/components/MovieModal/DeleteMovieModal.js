@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { closeMovieModal, submitMovieModal } from '../../pages/MovieSearch/action.creator';
 import S from './style.module.scss';
 
 const DeleteMovieModal = ({ closeMovieModal, submitMovieModal }) => (
@@ -20,4 +22,9 @@ DeleteMovieModal.propTypes = {
   submitMovieModal: PropTypes.func.isRequired,
 };
 
-export default DeleteMovieModal;
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  closeMovieModal: closeMovieModal(dispatch),
+  submitMovieModal: submitMovieModal(dispatch, ownProps),
+});
+
+export default connect(null, mapDispatchToProps)(DeleteMovieModal);
