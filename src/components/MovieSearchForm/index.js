@@ -17,7 +17,7 @@ const defaultMovie = {
 const MovieSearchForm = ({ openMovieModal }) => (
   <>
     <div className={S.mainBlock}>
-      <button className={S.addMovieBtn} onClick={() => openMovieModal(MovieModalType.ADD, defaultMovie)}>
+      <button className={S.addMovieBtn} onClick={openMovieModal(MovieModalType.ADD)}>
         +add movie
       </button>
       <div className={S.searchBlock}>
@@ -42,7 +42,7 @@ MovieSearchForm.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  openMovieModal: openMovieModal(dispatch),
+  openMovieModal: (modalType) => openMovieModal(dispatch, { movie: defaultMovie }, modalType),
 });
 
 export default connect(null, mapDispatchToProps)(MovieSearchForm);

@@ -44,8 +44,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         movieModal: true,
-        selectedMovie: action.payload,
-        modalType: action.modalType,
+        selectedMovie: action.payload.movie,
+        modalType: action.payload.modalType,
       };
     case ActionTypes.CLOSE_MOVIE_MODAL:
       return {

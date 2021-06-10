@@ -11,11 +11,11 @@ const MoviesListItem = ({ movie, openMovieModal, openMovieDetails }) => {
       <div className={S.settingBlock}>
         <button className={S.settingBtn}></button>
         <div className={S.settingContent}>
-          <a onClick={() => openMovieModal(MovieModalType.EDIT, movie)}>Edit</a>
-          <a onClick={() => openMovieModal(MovieModalType.DELETE, movie)}>Delete</a>
+          <a onClick={openMovieModal(MovieModalType.EDIT)}>Edit</a>
+          <a onClick={openMovieModal(MovieModalType.DELETE)}>Delete</a>
         </div>
       </div>
-      <div onClick={() => openMovieDetails(movie)}>
+      <div onClick={openMovieDetails}>
         <img src={movie.poster_path} className={S.img} alt="Movie poster" />
         <div className={S.desc}>
           <h2 className={S.title}>{movie.title}</h2>
@@ -40,9 +40,9 @@ MoviesListItem.propTypes = {
   openMovieDetails: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  openMovieDetails: openMovieDetails(dispatch),
-  openMovieModal: openMovieModal(dispatch),
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  openMovieDetails: openMovieDetails(dispatch, ownProps),
+  openMovieModal: (modalType) => openMovieModal(dispatch, ownProps, modalType),
 });
 
 export default connect(null, mapDispatchToProps)(MoviesListItem);

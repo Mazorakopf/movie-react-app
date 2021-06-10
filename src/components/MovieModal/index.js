@@ -21,11 +21,6 @@ const MovieModal = ({ modalType, selectedMovie }) => {
 MovieModal.propTypes = {
   modalType: PropTypes.string.isRequired,
   selectedMovie: PropTypes.object,
-  submitMovieModal: PropTypes.func.isRequired,
-  closeMovieModal: PropTypes.func.isRequired,
-  submitMovieModal: PropTypes.func.isRequired,
-  resetMovieModal: PropTypes.func.isRequired,
-  changeSelectedMovie: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ movieSearchPage }) => ({
