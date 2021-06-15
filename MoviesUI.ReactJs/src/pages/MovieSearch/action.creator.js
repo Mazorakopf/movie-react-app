@@ -62,19 +62,15 @@ export const openMovieModal = (dispatch, { movie }, modalType) => () =>
 export const openMovieSearchForm = (dispatch) => () =>
   dispatch({ type: ActionTypes.OPEN_MOVIE_SEARCH_FORM });
 
-const addMovie = (movie) => async () => {
-  return {
-    type: ActionTypes.ADD_MOVIE,
-    payload: await MovieApi.create(movie),
-  };
-};
+const addMovie = (movie) => async () => ({
+  type: ActionTypes.ADD_MOVIE,
+  payload: await MovieApi.create(movie),
+});
 
-const editMovie = (movie) => async () => {
-  return {
-    type: ActionTypes.EDIT_MOVIE,
-    payload: await MovieApi.update(movie),
-  };
-};
+const editMovie = (movie) => async () => ({
+  type: ActionTypes.EDIT_MOVIE,
+  payload: await MovieApi.update(movie),
+});
 
 const deleteMovie = (id) => async () => {
   if (await MovieApi.remove(id))
