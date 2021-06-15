@@ -10,9 +10,7 @@ const MovieDetails = React.lazy(() => import('../../components/MovieDetails'));
 
 const MovieSearch = ({ loading, movieDetails, movieModal, modalType, fetchAllMovies }) => {
   useEffect(() => {
-    if (modalType === '') {
-      fetchAllMovies();
-    }
+    if (modalType === '') fetchAllMovies();
   }, [modalType]);
 
   return (

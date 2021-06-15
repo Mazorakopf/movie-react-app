@@ -1,3 +1,4 @@
+import { MovieModalType } from '../../components/MovieModal/util';
 import { ActionTypes } from './action.creator';
 
 const initialState = {
@@ -7,6 +8,7 @@ const initialState = {
   movieModal: false,
   movieDetails: false,
   modalType: '',
+  errorMessage: '',
 };
 
 export default (state = initialState, action) => {
@@ -53,6 +55,7 @@ export default (state = initialState, action) => {
         movieModal: false,
         selectedMovie: null,
         modalType: '',
+        errorMessage: '',
       };
     case ActionTypes.OPEN_MOVIE_SEARCH_FORM:
       return {
@@ -70,6 +73,13 @@ export default (state = initialState, action) => {
         ...state,
         selectedMovie: action.payload,
       };
+    case ActionTypes.MOVIE_API_FAILURE:
+      return {
+        ...state,
+        movieModal: true,
+        modalType: MovieModalType.MOVIE_API_ERROR,
+        errorMessage: action.payload
+      }
     default:
       return state;
   }

@@ -1,6 +1,7 @@
 export const MovieModalType = {
     ADD: 'add',
     EDIT: 'edit',
-    DELETE: 'delete'
+    DELETE: 'delete',
+    MOVIE_API_ERROR: 'movieApiError'
 };
 

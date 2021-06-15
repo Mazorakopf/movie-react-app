@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 const DeleteMovieModal = React.lazy(() => import('./DeleteMovieModal'));
 const AddEditMovieModal = React.lazy(() => import('./AddEditMovieModal.js'));
+const MovieApiErrorModal = React.lazy(() => import('./MovieApiErrorModal.js'));
 
 const MovieModal = ({ modalType, selectedMovie }) => {
   switch(modalType) {
@@ -13,6 +14,8 @@ const MovieModal = ({ modalType, selectedMovie }) => {
       return <AddEditMovieModal { ...{ modalType, selectedMovie } }/>;
     case MovieModalType.DELETE: 
       return <DeleteMovieModal { ...{ modalType, selectedMovie } }/>;
+    case MovieModalType.MOVIE_API_ERROR:
+      return <MovieApiErrorModal />;
     default:
       return null;
   }

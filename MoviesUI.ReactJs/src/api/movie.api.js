@@ -7,7 +7,7 @@ const JsonContentType = {
 const toModel = (dto) => ({
   ...dto,
   genre: dto.genres[0],
-  release_year: dto.release_date.split('-')[0],
+  release_year: dto.release_date?.split('-')[0],
 });
 
 const toDTO = (model) => ({
