@@ -6,7 +6,7 @@ const initialState = {
   loading: true,
   selectedMovie: null,
   movieModal: false,
-  movieDetails: false,
+  movieDetails: null,
   modalType: '',
   errorMessage: '',
 };
@@ -28,6 +28,7 @@ export default (state = initialState, action) => {
         selectedMovie: null,
         movieModal: false,
         modalType: '',
+        movieDetails: state.movieDetails ? action.payload : null,
       };
     case ActionTypes.DELETE_MOVIE:
       return {
@@ -39,8 +40,7 @@ export default (state = initialState, action) => {
     case ActionTypes.OPEN_MOVIE_DETAILS:
       return {
         ...state,
-        movieDetails: true,
-        selectedMovie: action.payload,
+        movieDetails: action.payload,
       };
     case ActionTypes.OPEN_MOVIE_MODAL:
       return {
@@ -60,8 +60,7 @@ export default (state = initialState, action) => {
     case ActionTypes.OPEN_MOVIE_SEARCH_FORM:
       return {
         ...state,
-        movieDetails: false,
-        selectedMovie: action.payload,
+        movieDetails: null,
       };
     case ActionTypes.RESET_MOVIE_MODAL:
       return {

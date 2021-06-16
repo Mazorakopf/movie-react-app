@@ -5,17 +5,17 @@ import S from './style.module.scss';
 import { connect } from 'react-redux';
 import { openMovieSearchForm } from '../../pages/MovieSearch/action.creator';
 
-const MovieDetails = ({ selectedMovie, openMovieSearchForm }) => (
+const MovieDetails = ({ movieDetails, openMovieSearchForm }) => (
   <div className={S.overviewBlock}>
-    <img src={selectedMovie.poster_path} className={S.img} alt="Movie details pic" />
+    <img src={movieDetails.poster_path} className={S.img} alt="Movie details pic" />
     <div className={S.descBlock}>
-      <h2 className={S.title}>{selectedMovie.title}</h2>
-      <span className={S.genre}>{selectedMovie.genre}</span>
+      <h2 className={S.title}>{movieDetails.title}</h2>
+      <span className={S.genre}>{movieDetails.genre}</span>
       <div className={S.subDescBlock}>
-        <span className={S.releaseDate}>{selectedMovie.release_year}</span>
-        <span className={S.runtime}>{selectedMovie.runtime} min</span>
+        <span className={S.releaseDate}>{movieDetails.release_year}</span>
+        <span className={S.runtime}>{movieDetails.runtime} min</span>
       </div>
-      <span className={S.overviewText}>{selectedMovie.overview}</span>
+      <span className={S.overviewText}>{movieDetails.overview}</span>
     </div>
     <button className={S.searchBtn} onClick={openMovieSearchForm}>
       <SearchGlass className={S.searchGlass} />
@@ -24,7 +24,7 @@ const MovieDetails = ({ selectedMovie, openMovieSearchForm }) => (
 );
 
 MovieDetails.propTypes = {
-  selectedMovie: PropTypes.shape({
+  movieDetails: PropTypes.shape({
     poster_path: PropTypes.string,
     title: PropTypes.string.isRequired,
     release_date: PropTypes.string.isRequired,
@@ -35,7 +35,7 @@ MovieDetails.propTypes = {
 };
 
 const mapStateToProps = ({ movieSearchPage }) => ({
-  selectedMovie: movieSearchPage.selectedMovie,
+  movieDetails: movieSearchPage.movieDetails,
 });
 
 const mapDispatchToProps = (dispatch) => ({
