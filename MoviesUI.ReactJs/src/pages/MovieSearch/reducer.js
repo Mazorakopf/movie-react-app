@@ -62,16 +62,6 @@ export default (state = initialState, action) => {
         ...state,
         movieDetails: null,
       };
-    case ActionTypes.RESET_MOVIE_MODAL:
-      return {
-        ...state,
-        selectedMovie: action.payload,
-      };
-    case ActionTypes.CHANGE_MOVIE_INPUT:
-      return {
-        ...state,
-        selectedMovie: action.payload,
-      };
     case ActionTypes.MOVIE_API_FAILURE:
       return {
         ...state,
