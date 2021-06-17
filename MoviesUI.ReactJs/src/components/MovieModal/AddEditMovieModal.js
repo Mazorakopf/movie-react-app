@@ -1,7 +1,9 @@
+import { Field, Form, Formik, ErrorMessage } from 'formik';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { MovieFormSchema } from './util';
 import { connect } from 'react-redux';
-import { changeSelectedMovie, closeMovieModal, resetMovieModal, submitMovieModal } from '../../pages/MovieSearch/action.creator';
+import { closeMovieModal, submitMovieModal } from '../../pages/MovieSearch/action.creator';
 import S from './style.module.scss';
 
 const AddEditMovieModal = ({
@@ -9,89 +11,86 @@ const AddEditMovieModal = ({
   movie,
   closeMovieModal,
   submitMovieModal,
-  changeSelectedMovie,
-  resetMovieModal,
 }) => (
   <div className={S.modal}>
     <button className={S.close} onClick={closeMovieModal} />
     <span>{title} movie</span>
-    <label className={S.input}>
-      title
-      <input
-        type="text"
-        name="title"
-        value={movie.title}
-        placeholder="Movie title here"
-        onChange={changeSelectedMovie}
-      />
-    </label>
-    <label className={S.input}>
-      release date
-      <input
-        type="date"
-        name="release_date"
-        value={movie.release_date}
-        placeholder="Select Date"
-        onChange={changeSelectedMovie}
-      />
-    </label>
-    <label className={S.input}>
-      movie url
-      <input
-        type="url"
-        name="poster_path"
-        value={movie.poster_path}
-        placeholder="Movie URL here"
-        onChange={changeSelectedMovie}
-      />
-    </label>
-    <label className={S.input}>
-      genre
-      <select
-        name="genre"
-        value={movie.genre}
-        placeholder="Select Genre"
-        onChange={changeSelectedMovie}
-      >
-        <option value="Documentary">documentary</option>
-        <option value="Comedy">comedy</option>
-        <option value="Horror">horror</option>
-        <option value="Crime">crime</option>
-        <option value="Action">Action</option>
-        <option value="Adventure">Adventure</option>
-        <option value="Drama">Drama</option>
-        <option value="Family">Family</option>
-        <option value="Fantasy">Fantasy</option>
-      </select>
-    </label>
-    <label className={S.input}>
-      overview
-      <input
-        type="text"
-        name="overview"
-        value={movie.overview}
-        placeholder="Overview here"
-        onChange={changeSelectedMovie}
-      />
-    </label>
-    <label className={S.input}>
-      runtime
-      <input
-        type="number"
-        name="runtime"
-        value={movie.runtime}
-        placeholder="Runtime here"
-        onChange={changeSelectedMovie}
-      />
-    </label>
-    <div className={S.buttons}>
-      <button className={S.resetBtn} onClick={resetMovieModal}>
-        Reset
-      </button>
-      <button className={S.submitBtn} onClick={submitMovieModal}>
-        Submit
-      </button>
-    </div>
+    <Formik initialValues={movie} onSubmit={submitMovieModal} validationSchema={MovieFormSchema} >
+      {({ isSubmitting }) => (
+        <Form>
+          <label>title</label>
+          <Field
+            type="text"
+            name="title"
+            placeholder="Movie title here"
+            className={S.input}
+          />
+          <ErrorMessage name="title" component="span" className={S.errorMessage} />
+          <label>release date</label>
+          <Field
+            type="date"
+            name="release_date"
+            placeholder="Select Date"
+            className={S.input}
+          />
+          <ErrorMessage name="release_date" component="span" className={S.errorMessage} />
+          <label>movie url</label>
+          <Field
+            type="text"
+            name="poster_path"
+            placeholder="Movie URL here"
+            className={S.input}
+          />
+          <ErrorMessage name="poster_path" component="span" className={S.errorMessage} />
+          <label>genre</label>
+          <Field
+            as="select"
+            name="genre"
+            placeholder="Select Genre"
+            className={S.input}
+          >
+            <option value="Documentary">documentary</option>
+            <option value="Comedy">comedy</option>
+            <option value="Horror">horror</option>
+            <option value="Crime">crime</option>
+            <option value="Action">Action</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Drama">Drama</option>
+            <option value="Family">Family</option>
+            <option value="Fantasy">Fantasy</option>
+          </Field>
+          <ErrorMessage name="genre" />
+          <label>overview</label>
+          <Field
+            type="text"
+            name="overview"
+            placeholder="Overview here"
+            className={S.input}
+          />
+          <ErrorMessage name="overview" component="span" className={S.errorMessage} />
+          <label>runtime</label>
+          <Field
+            type="number"
+            name="runtime"
+            placeholder="Runtime here"
+            className={S.input}
+          />
+          <ErrorMessage name="runtime" component="span" className={S.errorMessage} />
+          <div className={S.buttons}>
+            <button type="reset" className={S.resetBtn}>
+              Reset
+            </button>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={S.submitBtn}
+            >
+              Submit
+            </button>
+          </div>
+        </Form>
+      )}
+    </Formik>
   </div>
 );
 
@@ -100,8 +99,6 @@ AddEditMovieModal.propTypes = {
   movie: PropTypes.object.isRequired,
   closeMovieModal: PropTypes.func.isRequired,
   submitMovieModal: PropTypes.func.isRequired,
-  changeSelectedMovie: PropTypes.func.isRequired,
-  resetMovieModal: PropTypes.func.isRequired,
 };
 
 AddEditMovieModal.defaultProps = {
@@ -113,7 +110,7 @@ AddEditMovieModal.defaultProps = {
     overview: '',
     runtime: 0,
   },
-}
+};
 
 const mapStateToProps = ({ movieSearchPage }) => ({
   title: movieSearchPage.modalType,
@@ -122,9 +119,10 @@ const mapStateToProps = ({ movieSearchPage }) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   closeMovieModal: closeMovieModal(dispatch),
-  submitMovieModal: submitMovieModal(dispatch, ownProps),
-  resetMovieModal: resetMovieModal(dispatch, ownProps),
-  changeSelectedMovie: changeSelectedMovie(dispatch, ownProps),
+  submitMovieModal: (values, { setSubmitting }) => {
+    submitMovieModal(dispatch, {...ownProps, selectedMovie: values }),
+    setSubmitting(false);
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddEditMovieModal);

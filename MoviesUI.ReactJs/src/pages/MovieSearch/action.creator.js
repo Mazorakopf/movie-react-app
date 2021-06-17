@@ -9,9 +9,7 @@ export const ActionTypes = {
   OPEN_MOVIE_DETAILS: 'OPEN_MOVIE_DETAILS',
   OPEN_MOVIE_MODAL: 'OPEN_MOVIE_MODAL',
   OPEN_MOVIE_SEARCH_FORM: 'OPEN_MOVIE_SEARCH_FORM',
-  RESET_MOVIE_MODAL: 'RESET_MOVIE_MODAL',
   CLOSE_MOVIE_MODAL: 'CLOSE_MOVIE_MODAL',
-  CHANGE_MOVIE_INPUT: 'CHANGE_MOVIE_INPUT',
   MOVIE_API_FAILURE: 'MOVIE_API_FAILURE'
 };
 
@@ -77,7 +75,7 @@ const deleteMovie = (id) => async () => {
     return { type: ActionTypes.DELETE_MOVIE };
 };
 
-export const submitMovieModal = (dispatch, { modalType, selectedMovie }) => () => {
+export const submitMovieModal = (dispatch, { modalType, selectedMovie }) => {
   if (modalType === MovieModalType.ADD)
     return dispatch(handleMovieApiError(addMovie(selectedMovie)));
   if (modalType === MovieModalType.EDIT)
@@ -86,24 +84,6 @@ export const submitMovieModal = (dispatch, { modalType, selectedMovie }) => () =
     return dispatch(handleMovieApiError(deleteMovie(selectedMovie.id)));
 };
 
-export const resetMovieModal = (dispatch, { selectedMovie }) => () => {
-  if (!selectedMovie?.id) return dispatch({ type: ActionTypes.RESET_MOVIE_MODAL });
-  return dispatch(handleMovieApiError(
-    async () => ({
-      type: ActionTypes.RESET_MOVIE_MODAL, 
-      payload: await MovieApi.getById(selectedMovie.id)
-    })
-  ));
-};
-
 export const closeMovieModal = (dispatch) => () =>
   dispatch({ type: ActionTypes.CLOSE_MOVIE_MODAL });
 
-export const changeSelectedMovie = (dispatch, { selectedMovie }) => (event) =>
-  dispatch({
-    type: ActionTypes.CHANGE_MOVIE_INPUT,
-    payload: {
-      ...selectedMovie,
-      [event.target.name]: event.target.value,
-    },
-  });

@@ -24,7 +24,7 @@ DeleteMovieModal.propTypes = {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   closeMovieModal: closeMovieModal(dispatch),
-  submitMovieModal: submitMovieModal(dispatch, ownProps),
+  submitMovieModal: () => submitMovieModal(dispatch, ownProps),
 });
 
 export default connect(null, mapDispatchToProps)(DeleteMovieModal);

@@ -4,7 +4,7 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  margin-top: -46vh; 
+  margin-top: -46vh;
   margin-left: -20vw;
   display: flex;
   flex-direction: column;
@@ -19,40 +19,42 @@
   }
 
   label {
-    margin: 1vh 2vw;
+    display: flex;
+    margin: 1.5vh 2vw 1vh;
     color: white;
     font-size: 0.9vw;
   }
-}
 
-.input {
-  display: flex;
-  flex-direction: column;
-  margin: 1vh 2vw;
-  color: g.$crimson;
-  font-size: 0.9vw;
-
-  input,
-  select {
-    margin-top: 0.7vh;
+  .input {
+    display: flex;
+    flex-direction: column;
+    margin: 1vh 2vw 0.3vh;
+    // color: g.$crimson;
+    font-size: 0.9vw;
     height: 6vh;
+    width: 36vw;
+    border-radius: 4px;
     background-color: g.$transparent-gray;
-
     &::placeholder {
       padding-left: 2%;
     }
+
+    input[type='date']::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      border-radius: 4px;
+      margin-right: 2px;
+      opacity: 0.6;
+      filter: invert(0.8);
+
+      &:hover {
+        opacity: 1;
+      }
+    }
   }
 
-  input[type='date']::-webkit-calendar-picker-indicator {
-    cursor: pointer;
-    border-radius: 4px;
-    margin-right: 2px;
-    opacity: 0.6;
-    filter: invert(0.8);
-
-    &:hover {
-      opacity: 1;
-    }
+  .errorMessage {
+    color: g.$crimson;
+    font-size: 0.7vw;
   }
 }
 
@@ -60,7 +62,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin-top: 5vh;
+  margin-top: 3.6vh;
   margin-bottom: 5vh;
 
   button {
